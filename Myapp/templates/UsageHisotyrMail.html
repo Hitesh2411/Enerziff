@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .containor{
+            display: block;
+            width: 80%;
+            margin: 0 auto;
+        }
+        .containor2{
+            /* margin-top: 20px; */
+            width: 80%;
+            margin: 0 auto;
+        }
+        
+        /* .company-img img{
+            height: 75px;
+            width : 75px;
+        } */
+        /* .invoice-text{
+            font-size: 1.3rem;
+            color:gray
+        } */
+        
+        .top-bar{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .row1{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .invoice table,tr,td,th{
+            width:100%;
+            padding: 3px;
+        }
+        
+        .invoice table{
+            padding:200px !important;
+        }
+        
+        .invoice tr:nth-child(odd) , #heading{
+            background-color: #b9b5b5;
+        }
+        
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+            /* width: 130%; */
+        }
+        
+        #bill-to{
+            background-color: #b9b5b5;
+            margin-right: 100px;;
+        }
+        
+        .description{
+            margin-top: 2.5rem;
+        }
+        
+    </style>
+    
+</head>
+<body>
+    <div class="containor">
+        <div class="top-bar">
+           
+            <div class="company-img">
+		     {% load static %}
+
+                      <img  src="./static/greenWellEngeries-Logo.png" alt="nameprinint" height="60" width="280">
+
+		    <!--                <img src="../static/greenWellEngeries-Logo.png" alt="nameprinint" height="60" width="280">-->
+            </div>
+            
+            <div class="invoice-text">
+                <p style="font-size: 30px; text-align: right;">Usage History</p>
+            </div>
+        </div>
+        <div class="company-details">
+            <p style="font-size: 18px;font-weight: bold;">Green Well Energies</p>
+            <p>Address</p>
+            <p>City,state,country</p>
+            <p>phonenumber,EmailId</p>
+        </div>
+        <div class="row1">
+            <div class="bill_info" style="margin-bottom: 15px;" >
+                <div class="bill_to" style="font-size: 18px;background-color: gray;">
+                    <p style="padding: 5px;">BILL TO</p>
+                </div>
+                <p><strong style="font-size: 13px;">Name:</strong><span style="margin-left: 5px;">{{name}}</span></p>
+                <p><strong style="font-size: 13px;">P.No:</strong><span style="margin-left: 5px;">{{phoneNumber}}</span></p>
+                <p><strong style="font-size: 13px;">Email:</strong><span style="margin-left: 5px;">{{Email}}</span></p>
+            </div>
+            
+            <div class="invoice">
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                    <tr>
+                        <td>{{date}}</td>
+                        <td>{{time}}</td>
+                    </tr>
+                    <tr>
+                        <th>CUSTOMER CODE</th>
+                        <th>MTR NO</th>
+                    </tr>
+                    <tr>
+                        <td>{{serialnumber}}</td>
+                        <td>{{serialnumber}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+    
+            <div class="usageTable">
+              <div class="bill_to" style="font-size: 18px;background-color: gray;">
+                <p style="padding: 5px;">Usage History</p>
+            </div>
+              <table border="1">
+                <thead>
+                  <tr>
+                    
+                    <th style="text-align: center;padding: 10px;">Meter StartTime</th>
+                    <th style="text-align: center;padding: 10px;">Meter EndTime</th>
+                    <th style="text-align: center;padding: 10px;">Gas_Consumption</th>
+                    <!--<th scope="col">Edit Option</th>-->
+                  </tr>
+                </thead>
+                <tbody>
+                    {%for i in usageHistory%}
+                  <tr>
+                    <td style="text-align: center;padding: 10px;">{{i.beginTime}}</td>
+                    <td style="text-align: center;padding: 10px;">{{i.endTime}}</td>
+                    <td style="text-align: center;padding: 10px;">{{i.gasConsumption}}</td>
+                  </tr>
+                  {%endfor%}
+                </tbody>
+            </table>
+            </div>
+            <p style="text-align: center;margin-top:100px ;font-size: 20px;font-style: italic;">Thank you for your bussiness</p>
+    </div>
+</body>
+</html>
+
+</body>
+</html>

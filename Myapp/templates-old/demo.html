@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Register Page</title>
+</head>
+<body>
+    <h1>Register Page</h1>
+    <form class="form" method="POST" action="{% url 'datapicking'%}">
+        {% csrf_token %}
+    <label>Name:</label>
+    <!-- <input placeholder="enter yourname" name="name"/> -->
+    <label name="name">{{form.name}}</label><br><br>
+
+    <label>Password:</label>
+    <!-- <input placeholder="enter Password"/> -->
+   <label name="password">{{form.password}}</label><br><br>
+    <label>Email:</label>
+    <!-- <input placeholder="enter email"/> -->
+    <label name="email">{{form.email}}</label><br><br>
+    <input type="submit"/>
+</form>
+</body>
+</html>

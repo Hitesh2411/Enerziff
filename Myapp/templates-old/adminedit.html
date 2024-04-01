@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="/Myapp/static/main.css" /> -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <base href="{% static '/' %}">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .profileContainer {
+        /* background-color: chartreuse; */ 
+      }
+      .menu-btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+      }
+      .menu-btn__burger {
+        width: 17.5px;
+        height: 2px;
+        background-color: #000000;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(255, 101, 47, 0.2);
+        transition: all 0.5s ease-in-out;
+      }
+      .menu-btn__burger::before,
+      .menu-btn__burger::after {
+        content: '';
+        position: absolute;
+        width: 17.5px;
+        height: 2px;
+        background-color: #000000;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(255, 101, 47, 0.2);
+        transition: all 0.5s ease-in-out;
+      }
+      .menu-btn__burger::before {
+        transform: translateY(-4px);
+      }
+      .menu-btn__burger::after {
+        transform: translateY(4px);
+      }
+      .menu-btn.open .menu-btn__burger {
+        transform: translateX(-50px);
+        background: transparent;
+        box-shadow: none;
+      }
+      .menu-btn.open .menu-btn__burger::before {
+        transform: rotate(45deg) translate(35px, -35px);
+      }
+      .menu-btn.open .menu-btn__burger::after {
+        transform: rotate(-45deg) translate(35px, 35px);
+      }
+      .menuContainer,
+      .menuItemsContainer {
+        /* background-color: #FAFAFA; */
+      }
+      .dashboard {
+        /* background-color: #f60; */
+      }
+      li {
+        list-style: none;
+        padding-bottom: 0px;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
+      ul {
+        margin-bottom: 0;
+        padding-left: 0;
+      }
+      .menuItemsContainer{
+        display: flex;
+        justify-content: center;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      .balancesAndTable.open{
+        display: none;
+      }
+      .editDetailsBlock.open{
+        display: none;
+      }
+      .rechargeBlock.open{
+        display: none;
+      }
+      .logout{
+        color: white;
+      }
+      .header-container{
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      .menuCont{
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        width: 120px;
+        z-index: 999;
+        transform: translate(-130px, 60px);
+        transition: 0.2s ease-in-out;
+      }
+      .menuCont.open {
+          transform: translateX(0px);
+          transition: 0.2s ease-in-out;
+          transform: translateY(60px);
+        }
+    </style>
+    {% load static %}
+    <link rel = "shortcut icon" type = "image" href = "{% static 'favicon.png' %}">
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="menuCont me-5 d-sm-none d-flex flex-column align-items-center position-absolute bg-white vh-100 ">
+        <ul
+        class="d-flex justify-content-start flex-column ms-1 mt-3"
+        style="font-weight: 555; font-size: medium"
+      >
+        <li class="mb-3"><a href="{%url 'adminHome'%}">Home</a></li>
+        <li class="mb-3">
+          <a href="{%url 'adminEdit'%}" type="'button">Edit Details</a>
+        </li>
+        <!-- <li class="mb-3"><a class="recharge" href="{%url 'amountinput'%}" type="'button">Recharge</a></li> -->
+        <button class="btn btn-danger mb-3">
+          <a class="logout" href="{%url 'deleteUser'%}">Logout</a>
+        </button>
+      </ul>
+      </div>
+      <div class="row">
+        <div class="col-12 d-sm-none d-flex justify-content-between align-items-center">
+          <div
+          class="menuContainer col-4 d-flex d-sm-none justify-content-start align-items-center"
+        >
+          <div class="menu-btn">
+            <div onclick="menuOpen()" class="menu-btn__burger"></div>
+          </div>
+        </div>
+        <div class="d-sm-none col-4 d-flex justify-content-center align-items-center">
+          <div class="mt-4 mb-3 logo-container">
+            {% load static %}
+            <img class="image w-75 h-75" src="{% static 'logo.png' %}" />
+          </div>
+        </div>
+        <div
+          class="profileContainer col-4 d-flex justify-content-end align-items-center d-sm-none"
+        >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4C13.0609 4 14.0783 4.42143 14.8284 5.17157C15.5786 5.92172 16 6.93913 16 8C16 9.06087 15.5786 10.0783 14.8284 10.8284C14.0783 11.5786 13.0609 12 12 12C10.9391 12 9.92172 11.5786 9.17157 10.8284C8.42143 10.0783 8 9.06087 8 8C8 6.93913 8.42143 5.92172 9.17157 5.17157C9.92172 4.42143 10.9391 4 12 4ZM12 14C16.42 14 20 15.79 20 18V20H4V18C4 15.79 7.58 14 12 14Z" fill="black"/>
+          </svg>          
+          <p style="font-weight: 555;" class="mt-3">{{NAME}}</p>
+        </div>
+        </div>
+      </div>
+      <div class="row header-container d-none d-sm-flex">
+        <div class="col-1 mt-4 mb-3 logo-container d-flex">
+          {% load static %}
+          <img class="w-100 h-100" src="{% static 'logo.png' %}" />
+        </div>
+        <div class="dashboard col-10 d-flex justify-content-center align-items-center">
+          <h3 class="">Smart Meter Inventory System</h3>
+        </div>
+        <div
+          class="profileContainer col-1 d-flex justify-content-center align-items-center"
+        >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4C13.0609 4 14.0783 4.42143 14.8284 5.17157C15.5786 5.92172 16 6.93913 16 8C16 9.06087 15.5786 10.0783 14.8284 10.8284C14.0783 11.5786 13.0609 12 12 12C10.9391 12 9.92172 11.5786 9.17157 10.8284C8.42143 10.0783 8 9.06087 8 8C8 6.93913 8.42143 5.92172 9.17157 5.17157C9.92172 4.42143 10.9391 4 12 4ZM12 14C16.42 14 20 15.79 20 18V20H4V18C4 15.79 7.58 14 12 14Z" fill="black"/>
+          </svg>          
+          <p style="font-weight: 555;" class="mt-3">{{NAME}}</p>
+        </div>
+        <!-- <div
+          class="menuContainer col-1 d-flex justify-content-center align-items-center"
+        >
+          <div class="menu-btn">
+            <div class="menu-btn__burger"></div>
+          </div>
+        </div> -->
+      </div>
+      <div class="row">
+        <div
+          class="menuItemsContainer d-sm-block d-none col-1 vh-100"
+        >
+          <ul class="d-sm-flex d-none justify-content-start flex-column ms-1 mt-3" style="font-weight: 555; font-size:medium;">
+            <li class="mb-3"><a href="{%url 'adminHome'%}">Home</a></li>
+            <li class="mb-3"><a href="{%url 'adminEdit'%}" type="'button">Edit Details</a></li>
+            <button class="btn btn-danger mb-3"><a class="logout" href="{%url 'deleteUser'%}">Logout</a></button>
+          </ul>
+        </div>
+        <div class="dashboardContainerItems col-11 mt-3">
+            <h3>Admin Edit Page</h3>
+            <br>
+                <form action="{%url 'selectEdit'%}" method="post">
+                    {% csrf_token %}
+                    <label class="mb-1">PhoneNumber</label>
+                    <input
+                      class="mb-3 py-1 pe-5 ps-2 border rounded-3"
+                      type="text"
+                      name="phonenumber"
+                      placeholder="Enter Phone Number"
+                    />
+                    <input
+                    class="btn-success border border-light px-3 rounded-3 py-1"
+                    type="submit"
+                  />
+                </form>
+                <table class="table table-hover table-dark">
+                    <thead>
+                      <tr>
+                        <th scope="col">User Name</th>
+                        <th scope="col">User PhoneNumber</th>
+                        <!--<th scope="col">Edit Option</th>-->
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in lpgdata%}
+                      <tr>
+                        <td>{{i.NAME}}</td>
+                        <td>{{i.PHONENUMBER}}</td>
+                        <!--<td><a style="color: white;" href="#">-</a></td>-->
+                      </tr>
+                      {%endfor%}
+                    </tbody>
+                  </table>
+      </div>
+    </div>
+  </body>
+  {% load static %}
+  <script>
+    const menuBtn = document.querySelector(".menu-btn__burger");
+    const menuCont = document.querySelector(".menuCont");
+    function menuOpen(){
+      menuCont.classList.toggle("open")
+    }
+  </script>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Inter';
+        font-size: 15px;
+      }
+      .image{
+        width: 200px;
+        height: 85px;
+      }
+    </style>
+    {% load static %}
+    <link rel = "shortcut icon" type = "image" href = "{% static 'favicon.png' %}">
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 d-sm-none">
+          <div class="mt-4 mb-3 logo-container">
+            {% load static %}
+            <img class="image w-50 h-50" src="{% static 'logo.png' %}" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-sm-6 col-12 vh-100 mt-5 mt-sm-0 loginContainer d-sm-flex justify-content-between justify-content-sm-center align-items-center flex-column"
+        >
+        <div class="mt-4 mb-3 logo-container d-sm-block d-none">
+          {% load static %}
+          <img class="image align-self-start" src="{% static 'logo.png' %}" />
+        </div>
+          <div class="loginBlock">
+            <div class="title mb-4">
+              <h1 class="fs-1 fw-semibold"><h1>Register</h1></h1>
+            </div>
+            <div class="formSection">
+              <form action="{%url 'reg'%}" method="post">
+                {% csrf_token %}
+                <label class="mb-1">Name</label>
+                <br />
+                <input
+                  pattern="[A-Za-z]+"
+                  title = "Enter Valid UserName"
+                  
+                  class="mb-3 py-1 pe-5 ps-2 border rounded-3"
+                  type="text"
+                  name="name"
+                  placeholder="Enter name"
+                  value="{{name}}"
+                  required
+                />
+                <br />
+                <label class="mb-1">Email</label>
+                <br />
+                <input
+                  class="mb-3 py-1 pe-5 ps-2 border rounded-3"
+                  type="text"
+                  name="email"
+                  placeholder="Enter email"
+                  pattern=".*@(gmail\.com|.*\.com|yahoo\.com|.*.)$" 
+                  title="Enter a valid Gmail address" 
+                  required
+                />
+                <br />
+                <label class="mb-1">Password</label>
+                <br />
+                <input
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}" 
+                  title="Password must be 8-15 characters long and include at least one lowercase letter, one uppercase letter, one digit, and one special character"
+                  class="mb-3 py-1 pe-5 ps-2 border rounded-3"
+                  type="text"
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                  
+                />
+                <br />
+                
+                <label class="mb-1">Profile</label>
+                <br />
+                <select name="profile"
+                class="mb-3 py-1 w-100 pe-5 ps-2 border rounded-3 ">
+                  <option value="user">user</option>
+                  <option value="admin">admin</option>
+                  <option value="areaLead">area lead</option>
+                </select>
+                <!-- <input
+                  class="mb-3 py-1 pe-5 ps-2 border rounded-3"
+                  type="text"
+                  name="profile"
+                  placeholder="Enter admin or user"
+                  
+                  required
+                /> -->
+                <br />
+                
+                <input
+                  class="btn-success border border-light px-3 rounded-3 py-1"
+                  type="submit"
+                />
+                <p>{{validation}}</p>
+              </form>
+            </div>
+            <div class="regCont d-flex mt-3">
+              <p>Already have an account?</p>
+              <a class="ms-1" href="{%url 'home'%}">Login</a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-6 d-none svgContainer d-sm-flex justify-content-center align-items-center flex-column"
+        >
+          <h1
+            class="fw-bolder mb-4"
+            style="
+              color: #86f0d3;
+              position: absolute;
+              top: 0;
+              transform: translateY(40px);
+            "
+          >
+          Smart Meter Inventory System
+          </h1>
+          {% load static %}
+          <img class="w-100 h-100" src="{% static 'agni.gif' %}" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
