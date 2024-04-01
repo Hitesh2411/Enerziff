@@ -1194,29 +1194,7 @@ def checkPaymentStatus(request,userName,counter,phoneNum,amount):
 
             except Exception as e:
                     print(f"An error occurred: {e}")
-                    # return HttpResponse("Error sending email.")
-            #sending sms
-       #     account_sid = 'AC979edcba3714497157bbd9bc1b0e738c'
-        #    auth_token = 'fd49326d3578971b8189c5a83390e9ac'
-         #   twilio_phone_number = '++12177545789'
 
-            # Recipient's phone number (you can replace this with the actual recipient's phone number)
-            #to_phone_number = "+919703321705"
-          #  to_phone_number = "+919820565918"
-
-            # Message to be sent
-           # message_body = "Your recharge of amount "+str(amount)+" KSh sucessfully done. \n\n From,\n Enerziff Solutions"
-
-            # Initialize Twilio client
-            #clientSMS = Client(account_sid, auth_token)
-
-            # Send SMS
-           # message = clientSMS.messages.create(
-            #    body=message_body,
-             #   from_=twilio_phone_number,
-              #  to=to_phone_number
-           # )
-            #deleting userBalanceAlertrow
             try:
                 if(amount+a.BAL_AMOUNT >= 100):
                     mailDeleteValues = userLowBalanceCheck.objects.get(SerialNumber=a.SERIAL_NUMBER)
@@ -1326,161 +1304,7 @@ def payment(request,userName):
         return render(request,'amountinput.html',{"status":userName+", Transaction Sucessfully Completed","name":userName})
     else:
         return render(request,'amountinput.html',{"status":"Transaction Failed Please try again after some time","name":userName})
-    #transactiondata=transaction_details.objects.all().values()
-    # count=0
-    # while True:
-    #     transactiondata=transaction_details.objects.all().values()
-    #     for i in range(len(transactiondata)):
-    #         ##print("Payment PhoNE",phoneNumber)
-    #         ##print("trans phone",transactiondata[i]['phoneNUmber'])
-    #         phoneNumber = transactiondata[i]['phoneNUmber']
-    #         ###print("isSuccess",transactiondata[i]['isSuccess'])
-    #         if (transactiondata[i]['isSuccess']=="success" and transactiondata[i]['phoneNUmber']==phoneNumber):
-    #                 userHistory1(phoneNumber)
-    #                 a=lpg_Customer_Table.objects.get(NAME=userName)                   
-    #                 ##print("aaa",a)
-    #                 ##print("a.BAL_AMOUNT before", a.BAL_AMOUNT)
-    #                 # a.BAL_AMOUNT = int(a.BAL_AMOUNT) + int(amount)
-    #                 # ##print("amount", amount)
-    #                 # ##print("a.BAL_AMOUNT after", a.BAL_AMOUNT)
-    #                 # a.save()
-    #                 ################## PUBLISH #################
-                    
-    #                 # -----------Publish Token -----------------------------------------------------------------
-
-    #                 secret_key_temp       =  '52fa8d60be23d944a8c4bbe4c0dfff5c'
-    #                 secret_key            =  codecs.decode(secret_key_temp, 'hex_codec') 
-    #                 Taxamount=int(amount)*(5/100)
-    #                 amt                   =  int(amount)-Taxamount
-    #                 gasUnits=int(amount)/100
-    #                 gasUnits=str(gasUnits)+" KG"
-    #                 #amt                   =  a.BAL_AMOUNT 
-    #                 ##print("secret key", secret_key )
-    #                 serial_no = 320000001
-    #                 device_starting_code = 302623035
-    #                 ##print("starting code", device_starting_code )
-    #                 restricted_digit_set =  False
-    #                 ##print('\n')
-    #                 server_simulator = SingleDeviceServerSimulator(device_starting_code, secret_key,
-    #                                                restricted_digit_set=restricted_digit_set)
-    #                 token_1 = server_simulator._generate_extended_value_token(int(amt))
-    #                 ##print('Extended Tokens: ', token_1)
-
-    #                 val2 = {"SERIAL_NUMBER":a.SERIAL_NUMBER,
-    #                         "BAL_AMOUNT" : token_1
-    #                 }
-    #                 data_out=json.dumps(val2,  default=str)  # encode oject to JSON
-    #                 ##print("sending data: " +  str(amt))
-    #                 client.publish(outDevice,data_out)
-    #                 ##print("Just published " + str(token_1) + " to "+str(outDevice)  )
-    #                 ################# END  PUBLISH ##############
-    #                 #sending email
-    #                 #adding the amount to previous balence
-    #                 # a.BAL_AMOUNT = int(a.BAL_AMOUNT) + int(amt)
-    #                 # a.save()
-    #                 ##print("this email only working")
-    #                 try:
-    #                     # Dynamic data to be passed to the HTML template
-    #                         ##print("this email only working")
-    #                         x2=datetime.now()
-    #                         val="-"
-    #                         val2=":"
-    #                         date2=str(x2.year)+val+str(x2.month)+val+str(x2.day)
-    #                         time2=str(x2.hour)+val2+str(x2.minute)+val2+str(x2.second)
-    #                         dynamic_data = {
-    #                             'name': a.NAME,
-    #                             'message': 'Thank you for using our service!',
-    #                             'date':date2,
-    #                              'time':time2,
-    #                              'amount':amount,
-    #                              'serialnumber':a.SERIAL_NUMBER,
-    #                              'cutomerCode':a.SERIAL_NUMBER,
-    #                              'TaxAmount':Taxamount,
-    #                              'unitsPurchased':gasUnits,
-    #                              'Email':a.EMAILS,
-    #                              "imagepath":'/Myapp/static/greenWellEngeries-Logo.png',
-    #                              'RemainingAmount':amt,
-    #                              'phoneNumber':a.PHONENUMBER
-                                 
-    #                         }
-    #                         dynamic_data2={
-    #                             "date":"20-3-1243"
-    #                         }
-
-                            
-    #                         # Your HTML template with dynamic data
-    #                         template = get_template('Invoice.html')
-    #                         #template = get_template('/home/ubuntu/7-12/Mpesapoc-latest/Mpesapoc-latest/Mpesapoc-latest/Mpesapoc/Myapp/templates/invoice.html')
-    #                         html_content = template.render(dynamic_data)
-
-    #                         # Generate PDF using xhtml2pdf
-    #                         pdf_data = io.BytesIO()
-    #                         pisa.CreatePDF(html_content, dest=pdf_data)
-
-    #                         # Compose email
-    #                         subject = '#Invoice Enerziff Solutions'
-    #                         message = 'Dear '+userName+',\n Your recharge of amount '+str(amount)+'KSh sucessfully done. \n\n From,\n Enerziff Solutions'
-    #                         fromEmail=settings.EMAIL_HOST_USER
-    #                         to_email = a.EMAILS
-
-    #                         ##print("user email",to_email)
-    #                         # Attach the PDF file to the email
-    #                         pdf_data.seek(0)  # Reset the file pointer to the beginning
-    #                         email = EmailMessage(subject, message,fromEmail, [to_email])
-    #                         email.attach('Invoice.pdf', pdf_data.getvalue(), 'application/pdf')
-
-    #                         # Send the email
-    #                         email.send()
-
-                            
-
-    #                 except Exception as e:
-    #                         ##print(f"An error occurred: {e}")
-    #                         # return HttpResponse("Error sending email.")
-    #                 #sending sms
-    #                 account_sid = 'AC979edcba3714497157bbd9bc1b0e738c'
-    #                 auth_token = 'fd49326d3578971b8189c5a83390e9ac'
-    #                 twilio_phone_number = '++12177545789'
-
-    #                 # Recipient's phone number (you can replace this with the actual recipient's phone number)
-    #                 to_phone_number = "+919703321705"
-
-    #                 # Message to be sent
-    #                 message_body = "Your recharge of amount "+str(amount)+" KSh sucessfully done. \n\n From,\n Enerziff Solutions"
-
-    #                 # Initialize Twilio client
-    #                 clientSMS = Client(account_sid, auth_token)
-
-    #                 # Send SMS
-    #                 message = clientSMS.messages.create(
-    #                     body=message_body,
-    #                     from_=twilio_phone_number,
-    #                     to=to_phone_number
-    #                 )
-    #                 #deleting userBalanceAlertrow
-    #                 try:
-    #                     if(amount+a.BAL_AMOUNT >= 100):
-    #                         mailDeleteValues = userLowBalanceCheck.objects.get(SerialNumber=a.SERIAL_NUMBER)
-    #                         mailDeleteValues.delete()
-    #                 except:
-    #                     ##print("the value is not present")
-    #                 #transaction success
-    #                 transactionData=transaction_details.objects.get(phoneNUmber=a.PHONENUMBER)
-    #                 transactionData.delete()
-    #                 return render(request,'amountinput.html',{"status":userName+", Transaction Sucessfully Completed","name":userName})
-    #     time.sleep(10)
-    #     count=count+1
-    #     if(count==6):
-    #         ##print("this is phonenumber of user",transactiondata[i]['phoneNUmber'])
-    #         a=lpg_Customer_Table.objects.get(PHONENUMBER=transactiondata[i]['phoneNUmber'])                   
-    #         transactionData=transaction_details.objects.get(phoneNUmber=a.PHONENUMBER)
-    #         ##print("this is data about data",transactionData.phoneNUmber)
-    #         transactionData.delete()
-    #         count=0
-    #         return render(request,'amountinput.html',{"status":"Transaction Failed Please try again after some time","name":userName})
-
-
-    #Update amount in BAL_AMOUNT
+    
 
 def deleteUser(request):
         #this function we are calling for logout.
@@ -1645,9 +1469,6 @@ def c2bPaymentCheck():
                                 mailDeleteValues = userLowBalanceCheck.objects.get(SerialNumber=i['SerialNumber'])
                                 mailDeleteValues.MailStatus="True"
                                 mailDeleteValues.save() 
-                                # account_sid = 'AC1f2c2011103a5d388045e5b487d02d0d'
-                                # auth_token = 'bf61cd4097f55bc0cd89c7cc2fddc734'
-                                # twilio_phone_number = '+19014251030'
                                 account_sid = 'AC979edcba3714497157bbd9bc1b0e738c'
                                 auth_token = 'fd49326d3578971b8189c5a83390e9ac'
                                 twilio_phone_number = '++12177545789'
@@ -1787,23 +1608,12 @@ def c2bPaymentCheck():
                 
                 email = EmailMessage(subject, message,fromEmail, [to_email])
                 email.attach('C2b_Invoice.pdf', pdf_data.getvalue(), 'application/pdf')
-                
-                # Send the email
-                #email.send()
-               
-                 # return HttpResponse("Email sent successfully.")
-
-                #sending sms
-                # account_sid = 'AC1f2c2011103a5d388045e5b487d02d0d'
-                # auth_token = 'bf61cd4097f55bc0cd89c7cc2fddc734'
-                # twilio_phone_number = '+19014251030'
+  
                 account_sid = 'AC979edcba3714497157bbd9bc1b0e738c'
                 auth_token = 'fd49326d3578971b8189c5a83390e9ac'
                 twilio_phone_number = '++12177545789'
 
 
-                # Recipient's phone number (you can replace this with the actual recipient's phone number)
-                #to_phone_number = "+919703321705"
                 to_phone_number = "+919820565918"
                 # Message to be sent
                 message_body = "Your recharge of amount "+str(i['amount'])+" KSh sucessfully done. \n\n From,\n Enerziff Solutions"
@@ -1811,12 +1621,7 @@ def c2bPaymentCheck():
                 # Initialize Twilio client
                 clientSMS = Client(account_sid, auth_token)
 
-                # Send SMS
-                #message = clientSMS.messages.create(
-                #    body=message_body,
-                #    from_=twilio_phone_number,
-                #    to=to_phone_number
-                #)
+               
                 
             except Exception as e:
                 print("try didn't executed",{e})
@@ -1824,9 +1629,7 @@ def c2bPaymentCheck():
 
 
 def userHistory1(number4,amount):
-    #this function we calling some other functions also. here we are storing data related to recharge history.
-    ##print("userinserted amount is",amount)
-    ##print("my phnenumber is ",number4)
+   
     a=lpg_Customer_Table.objects.get(PHONENUMBER=number4)
     Gas_Value=amount/10
     New_Added_Gas=Gas_Value
@@ -2952,8 +2755,7 @@ def leadDashBoard(name):
     User_Faulty_Count=Lpg_Status_Infos.objects.filter(AREA_LEAD=name, CONNECTION_STATUS="faulty").count()
     print("count is",User_Online_Count,User_Offline_Count)
     Battery_Count=Lpg_Status_Infos.objects.filter(AREA_LEAD=name, BATTERY_TIME__range=[Time_Value,datetime.now()]).count()
-  
-    
+
     State_COUNT =  usersLocationInfo.objects.filter(AREA_LEAD = name).values('State').annotate(count=Count('State')).order_by()
     GAS_COUNT = len(Gas_Values)
     DEV_COUNT = lpg_Customer_Table.objects.filter(AREA_LEAD = name, DEV_TIME__range=[Time_Value,datetime.now()]).count()
